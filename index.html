@@ -1,0 +1,226 @@
+<!--ideas:
+    feed yafet (monkey emoji) with watermelons
+    random math and chem questions
+    give the worst possible chess move
+    guess some random really old flag
+    terrorist attack places bombs throughout the password
+    random frc statistics or questions (like what was the third team in the losing alliance of the second semifinal of the 2015 arizona south regional)
+    watch a frc match and analyze it (like how many teams could score in L4)-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Password Game</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #111;
+      color: #f1f1f1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 100px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 320px;
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      margin-bottom: 20px;
+      background-color: #222;
+      color: white;
+    }
+
+    .rules {
+      width: 340px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .rule {
+      padding: 8px;
+      border-left: 8px solid gray;
+      background-color: #1e1e1e;
+      transition: 0.25s;
+      border-radius: 4px;
+    }
+
+    .rule.valid {
+      border-left-color: limegreen;
+      color: limegreen;
+    }
+
+    .rule.invalid {
+      border-left-color: crimson;
+      color: crimson;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Password Game: Yafet Edition</h1>
+
+  <input type="text" id="passwordInput" placeholder="Enter your password..." />
+
+  <div class="rules" id="rulesContainer"></div>
+
+  <script>
+    const input = document.getElementById("passwordInput");
+    const rulesContainer = document.getElementById("rulesContainer");
+
+    const rules = [
+      {
+        id: 1,
+        text: "Rule 1: Must be at least 5 characters long",
+        check: (val) => val.length >= 5
+      },
+      {
+        id: 2,
+        text: "Rule 2: Must contain at least one number",
+        check: (val) => /\d/.test(val)
+      },
+      {
+        id: 3,
+        text: "Rule 3: Must contain at least one uppercase letter",
+        check: (val) => /[A-Z]/.test(val)
+      },
+      {
+        id: 4,
+        text: "Rule 4: Must contain a special character",
+        check: (val) => /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(val)
+      },
+      {
+        id: 5,
+        text: "Rule 5: Must include the word 'goon' somewhere",
+        check: (val) => val.toLowerCase().includes("goon")
+      },
+      {
+        id: 7,
+        text: "The digits in your password must add up to 67",
+        check: (val) => {
+            const digits = val.match(/\d/g);
+            if (!digits) return false;
+            const sum = digits.map(Number).reduce((a, b) => a + b, 0);
+            return sum === 67;
+          }
+      },
+      {
+        id: 8,
+        text: "Your password must include a month of the year",
+        check: (val) => {
+            const months = [
+            "january","february","march","april","may","june",
+            "july","august","september","october","november","december"
+            ];
+            const lower = val.toLowerCase();
+            return months.some(m => lower.includes(m));
+          }
+      },
+      {
+        id: 9,
+        text: "Your password must include a Roman numeral",
+        check: (val) => {
+            // This checks for a sequence that *could* be a valid Roman numeral
+            // You can make this looser (just /[IVXLCDM]/i) if you want
+            const romanPattern = /\bM{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})\b/i;
+            return romanPattern.test(val);
+          }
+      },
+      {
+        id: 10,
+        text: "Your password must include one of our sponsors (BrandA, BrandB, or BrandC)",
+        check: (val) => {
+            const sponsors = ["branda", "brandb", "brandc"]; // replace w/ your real sponsor names
+            const lower = val.toLowerCase();
+            return sponsors.some(s => lower.includes(s));
+          }
+      },
+      {
+        id: 11,
+        text: "Your password must include the current CAPTCHA",
+        // the logic assumes you have a global variable currentCaptcha
+        // that stores the text of the currently shown CAPTCHA (like "bx45r")
+        check: (val) => {
+            if (typeof currentCaptcha === "undefined") return false;
+            return val.toLowerCase().includes(currentCaptcha.toLowerCase());
+          }
+      }
+    ];
+
+    let visibleRules = [1]; // start with only rule 1 visible
+
+    // function to render all visible rules
+    function renderRules(password) {
+      // separate valid and invalid rules
+      const validRules = [];
+      const invalidRules = [];
+
+      for (const ruleId of visibleRules) {
+        const rule = rules.find(r => r.id === ruleId);
+        const isValid = rule.check(password);
+
+        const ruleDiv = document.createElement("div");
+        ruleDiv.textContent = rule.text;
+        ruleDiv.classList.add("rule", isValid ? "valid" : "invalid");
+        ruleDiv.dataset.id = rule.id;
+
+        if (isValid) validRules.push(ruleDiv);
+        else invalidRules.push(ruleDiv);
+      }
+
+      // clear container
+      rulesContainer.innerHTML = "";
+
+      // red (invalid) rules at the top
+      invalidRules.forEach(rule => rulesContainer.appendChild(rule));
+      validRules.forEach(rule => rulesContainer.appendChild(rule));
+    }
+
+    input.addEventListener("input", () => {
+      const val = input.value;
+
+      // check which rules are passed
+      for (let i = 0; i < rules.length; i++) {
+        const rule = rules[i];
+        if (visibleRules.includes(rule.id)) continue;
+
+        // only show next rule if all previous ones are valid
+        const allPreviousValid = rules
+          .slice(0, i)
+          .every(r => r.check(val));
+
+        if (allPreviousValid) visibleRules.push(rule.id);
+      }
+
+      renderRules(val);
+    });
+
+    // Array of your captcha codes
+    const captchas = ["bx45r", "m9t7z", "h24qp", "t3d2k", "g7x5v"]; 
+
+    // Pick a random one
+    function getRandomCaptcha() {
+        const choice = captchas[Math.floor(Math.random() * captchas.length)];
+        currentCaptcha = choice; // global variable used by rule 11
+        document.getElementById("captchaImage").src = `captchas/${choice}.png`;
+    }
+
+
+    // initial render
+    renderRules("");
+  </script>
+</body>
+</html>
