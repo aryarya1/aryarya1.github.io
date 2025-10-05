@@ -194,7 +194,8 @@
       // clear container
       rulesContainer.innerHTML = "";
 
-      // red (invalid) rules at the top
+      validRules.sort((a, b) => b.dataset.id - a.dataset.id);
+      invalidRules.sort((a, b) => b.dataset.id - a.dataset.id);
       invalidRules.forEach(rule => rulesContainer.appendChild(rule));
       validRules.forEach(rule => rulesContainer.appendChild(rule));
     }
