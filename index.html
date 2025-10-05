@@ -84,27 +84,27 @@
     const rules = [
       {
         id: 1,
-        text: "Rule 1: Must be at least 5 characters long",
+        text: "Rule 1: Your password must be at least 5 characters long",
         check: (val) => val.length >= 5
       },
       {
         id: 2,
-        text: "Rule 2: Must contain at least one number",
+        text: "Rule 2: Your password must contain at least one number",
         check: (val) => /\d/.test(val)
       },
       {
         id: 3,
-        text: "Rule 3: Must contain at least one uppercase letter",
+        text: "Rule 3: Your password must contain at least one uppercase letter",
         check: (val) => /[A-Z]/.test(val)
       },
       {
         id: 4,
-        text: "Rule 4: Must contain a special character",
+        text: "Rule 4: Your password must contain a special character",
         check: (val) => /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(val)
       },
       {
         id: 5,
-        text: "Rule 5: Must include the word 'goon' somewhere",
+        text: "Rule 5: Your password must include the word 'goon' somewhere",
         check: (val) => val.toLowerCase().includes("goon")
       },
       {
@@ -119,7 +119,7 @@
       },
       {
         id: 7,
-        text: "Rule 7: Must include a month of the year",
+        text: "Rule 7: Your password must include a month of the year",
         check: (val) => {
             const months = [
             "january","february","march","april","may","june",
@@ -131,7 +131,7 @@
       },
       {
         id: 8,
-        text: "Rule 8: Must include a Roman numeral",
+        text: "Rule 8: Your password must include a Roman numeral",
         check: (val) => {
             // This checks for a sequence that *could* be a valid Roman numeral
             // You can make this looser (just /[IVXLCDM]/i) if you want
@@ -141,7 +141,7 @@
       },
       {
         id: 9,
-        text: "Rule 9: Must include one of our sponsors (WAR Club, THOUGHT Club, or Sam's Club)",
+        text: "Rule 9: Your password must include one of our sponsors (WAR Club, THOUGHT Club, or Sam's Club)",
         check: (val) => {
             const sponsors = ["war", "thought", "sam"];
             const lower = val.toLowerCase();
@@ -150,7 +150,7 @@
       },
       {
         id: 10,
-        text: "Rule 10: Must include the current CAPTCHA (doesnt work yet)",
+        text: "Rule 10: Your password must include the current CAPTCHA (doesnt work yet)",
         // the logic assumes you have a global variable currentCaptcha
         // that stores the text of the currently shown CAPTCHA (like "bx45r")
         //check: (val) => {
