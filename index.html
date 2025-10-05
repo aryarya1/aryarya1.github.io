@@ -158,7 +158,16 @@
             //return val.toLowerCase().includes(currentCaptcha.toLowerCase());
           //}
         check: (val) => val.length >= 5
-      }
+      },
+      //renderExtra: () => {
+        //const wrapper = document.createElement("div");
+        //wrapper.style.marginTop = "6px";
+        //wrapper.innerHTML = `
+          //<img id="captchaImage" src="captchas/${currentCaptcha}.png" width="150" style="display:block; margin-bottom:6px;">
+          //<button id="newCaptcha" style="padding:5px 10px; font-size:14px;">New CAPTCHA</button>
+        //`;
+        //return wrapper;
+      //}
     ];
 
     let visibleRules = [1]; // start with only rule 1 visible
@@ -215,7 +224,7 @@
     // Pick a random one
     function getRandomCaptcha() {
         const choice = captchas[Math.floor(Math.random() * captchas.length)];
-        currentCaptcha = choice; // global variable used by rule 11
+        currentCaptcha = choice; // global variable used by rule 10
         document.getElementById("captchaImage").src = `captchas/${choice}.png`;
     }
 
