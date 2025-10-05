@@ -119,7 +119,7 @@
       },
       {
         id: 7,
-        text: "Rule 7: Your password must include a month of the year",
+        text: "Rule 7: Must include a month of the year",
         check: (val) => {
             const months = [
             "january","february","march","april","may","june",
@@ -131,7 +131,7 @@
       },
       {
         id: 8,
-        text: "Rule 8: Your password must include a Roman numeral",
+        text: "Rule 8: Must include a Roman numeral",
         check: (val) => {
             // This checks for a sequence that *could* be a valid Roman numeral
             // You can make this looser (just /[IVXLCDM]/i) if you want
@@ -141,7 +141,7 @@
       },
       {
         id: 9,
-        text: "Rule 9: Your password must include one of our sponsors (WAR Club, THOUGHT Club, or Sam's Club)",
+        text: "Rule 9: Must include one of our sponsors (WAR Club, THOUGHT Club, or Sam's Club)",
         check: (val) => {
             const sponsors = ["war", "thought", "sam"];
             const lower = val.toLowerCase();
@@ -150,7 +150,7 @@
       },
       {
         id: 10,
-        text: "Rule 10: Your password must include the current CAPTCHA (doesnt work yet)",
+        text: "Rule 10: Must include the current CAPTCHA (doesnt work yet)",
         // the logic assumes you have a global variable currentCaptcha
         // that stores the text of the currently shown CAPTCHA (like "bx45r")
         //check: (val) => {
