@@ -141,22 +141,23 @@
       },
       {
         id: 10,
-        text: "Your password must include one of our sponsors (BrandA, BrandB, or BrandC)",
+        text: "Your password must include one of our sponsors (WAR Club, THOUGHT Club, or Sam's Club)",
         check: (val) => {
-            const sponsors = ["branda", "brandb", "brandc"]; // replace w/ your real sponsor names
+            const sponsors = ["war", "thought", "sam"];
             const lower = val.toLowerCase();
             return sponsors.some(s => lower.includes(s));
           }
       },
       {
         id: 11,
-        text: "Your password must include the current CAPTCHA",
+        text: "Your password must include the current CAPTCHA (doesnt work yet)",
         // the logic assumes you have a global variable currentCaptcha
         // that stores the text of the currently shown CAPTCHA (like "bx45r")
-        check: (val) => {
-            if (typeof currentCaptcha === "undefined") return false;
-            return val.toLowerCase().includes(currentCaptcha.toLowerCase());
-          }
+        //check: (val) => {
+            //if (typeof currentCaptcha === "undefined") return false;
+            //return val.toLowerCase().includes(currentCaptcha.toLowerCase());
+          //}
+        check: (val) => val.length >= 5
       }
     ];
 
